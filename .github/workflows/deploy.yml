@@ -24,7 +24,7 @@ jobs:
       - name: Build project
         run: npm run build
 
-        # Setup SSH
+      # Setup SSH
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
@@ -35,10 +35,9 @@ jobs:
       - name: Test SSH connection
         run: |
           echo "Testing SSH connection"
-          ssh -v -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.SERVERIP }} exit
+          ssh -o StrictHostKeyChecking=no -v -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.SERVERIP }} exit
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-          
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v0.1.2
@@ -53,3 +52,7 @@ jobs:
             npm install
             npm run build
             pm2 restart ecosystem.config.js
+
+      - name: Verify Deployment
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.SERVERIP }} 'pm2 list'
