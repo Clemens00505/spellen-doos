@@ -32,7 +32,7 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY }}
           port: 22
           script: |
-            cd /pad/naar/project
+            cd /home/clemens/nx-monorepo
             git pull
             npm install
             npm run build
