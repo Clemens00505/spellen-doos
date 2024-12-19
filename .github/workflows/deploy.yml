@@ -24,7 +24,7 @@ jobs:
       - name: Test SSH connection
         run: |
           echo "Testing SSH connection"
-          ssh -v -i ~/.ssh/id_rsa ${{ secrets.userName }}@${{ secrets.serverIp }} exit
+          ssh -v -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.SERVERIP }} exit
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
 
