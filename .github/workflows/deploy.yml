@@ -21,6 +21,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Test SSH connection
+        run: |
+          echo "Testing SSH connection"
+          ssh -v -i ~/.ssh/id_rsa ${{ secrets.userName }}@${{ secrets.serverIp }} exit
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+
+
       - name: Build project
         run: npm run build
 
