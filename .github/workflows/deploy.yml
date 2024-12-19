@@ -47,14 +47,23 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY }}
           port: 22
           script: |
-            cd /home/clemens/nx-monorepo
-            git pull
-            npm install
-            npm run build
-            pm2 start "http-server dist/apps/spellen-doos -p 8081" --name "spellen-doos" || pm2 restart "spellen-doos"
-            pm2 start "dist/apps/data-api/main.js" --name "data-api" || pm2 restart "data-api"
-            pm2 startup
-            pm2 save
+              cd /home/clemens/nx-monorepo
+              git pull
+              npm install
+              npm run build
+
+              # Start or restart the frontend service
+              pm2 show "spellen-doos" > /dev/null 2>&1 || pm2 start "http-server dist/apps/spellen-doos -p 8081" --name "spellen-doos"
+              pm2 restart "spellen-doos" || pm2 start "http-server dist/apps/spellen-doos -p 8081" --name "spellen-doos"
+
+              # Start or restart the API service
+              pm2 show "data-api" > /dev/null 2>&1 || pm2 start "dist/apps/data-api/main.js" --name "data-api"
+              pm2 restart "data-api" || pm2 start "dist/apps/data-api/main.js" --name "data-api"
+
+              # Ensure pm2 runs on startup
+              pm2 startup
+              pm2 save
+
 
       - name: Verify Deployment
         run: |
