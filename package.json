@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "nx build"
-  },
+    "build:frontend": "nx build spellen-doos",
+    "build:api": "nx build data-api",
+    "build": "nx build spellen-doos && nx build data-api"
+  }
   "private": true,
   "dependencies": {
     "@angular/animations": "~19.0.0",
