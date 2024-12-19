@@ -53,8 +53,8 @@ jobs:
               npm run build
 
               # Start or restart the frontend service
-              pm2 show "spellen-doos" > /dev/null 2>&1 || pm2 start "http-server dist/apps/spellen-doos -p 8081" --name "spellen-doos"
-              pm2 restart "spellen-doos" || pm2 start "http-server dist/apps/spellen-doos -p 8081" --name "spellen-doos"
+              pm2 show "spellen-doos" > /dev/null 2>&1 || pm2 start "http-server dist/apps/spellen-doos -p 8080" --name "spellen-doos"
+              pm2 restart "spellen-doos" || pm2 start "http-server dist/apps/spellen-doos -p 8080" --name "spellen-doos"
 
               # Start or restart the API service
               pm2 show "data-api" > /dev/null 2>&1 || pm2 start "dist/apps/data-api/main.js" --name "data-api"
